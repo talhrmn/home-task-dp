@@ -1,0 +1,57 @@
+.addItems {
+  max-width: var(--max-width);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.addContent {
+  text-align: center;
+}
+
+.subHeader {
+  margin-bottom: 20px;
+}
+
+.userEntry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.userText {
+  margin-right: 10px;
+}
+
+.userInput {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.5;
+  padding: 10px;
+  min-width: 200px;
+}
+
+.userInput::placeholder {
+  text-align: center;
+  line-height: inherit;
+}
+
+.hoverableImage {
+  transition: transform 0.3s ease-in-out;
+  margin-top: 20px;
+}
+
+.hoverableImage:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.code {
+  font-weight: 700;
+  font-family: var(--font-mono);
+}

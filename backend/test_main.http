@@ -1,0 +1,24 @@
+# Test your FastAPI endpoints
+
+GET http://127.0.0.1:8000/
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/settings
+Accept: application/json
+
+###
+
+PUT http://127.0.0.1:8000/settings
+Accept: application/json
+Content-Type: application/json; charset=utf-8
+
+{"time_interval": 30, "valid_threshold": 100, "warning_threshold": 150, "danger_threshold": 200}
+
+###
+
+GET http://127.0.0.1:8000/monitor
+Accept: application/json
+
+###
