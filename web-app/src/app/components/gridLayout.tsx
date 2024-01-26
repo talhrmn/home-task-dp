@@ -30,7 +30,6 @@ export const GridLayout = () => {
       setSettings({
         interval: data.interval,
         validThreshold: data.valid_threshold,
-        warningThreshold: data.warning_threshold,
         dangerThreshold: data.danger_threshold,
       } as SettingsType);
     };

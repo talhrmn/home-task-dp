@@ -10,7 +10,6 @@ import React, {
 export type SettingsType = {
   interval: number;
   validThreshold: number;
-  warningThreshold: number;
   dangerThreshold: number;
 };
 

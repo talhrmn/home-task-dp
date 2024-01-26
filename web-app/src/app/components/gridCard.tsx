@@ -22,6 +22,8 @@ export const GridCard = ({ monitor }: GridCardProps) => {
     siteUrl: monitor.siteUrl,
   });
 
+  console.log(monitor.latency);
+
   const cardColor = useMemo(() => {
     const latency = monitor.latency;
 
@@ -40,8 +42,6 @@ export const GridCard = ({ monitor }: GridCardProps) => {
   const cardStyle = useMemo(() => {
     return { background: cardColor };
   }, [cardColor]);
-
-  console.log(cardColor);
 
   const onClick = useCallback(() => {
     setInEditMode((editMode) => !editMode);
@@ -146,9 +146,11 @@ export const GridCard = ({ monitor }: GridCardProps) => {
   const cardDisplay = useMemo(() => {
     if (!inEditMode) {
       return (
-        <div className={styles.card} style={cardStyle} onClick={onClick}>
+        <div className={styles.card} onClick={onClick}>
           <h2 className={styles.h2}>{monitor.siteName}</h2>
-          <p>Latency ms: {monitor.latency.toFixed(3)}</p>
+          <p>
+            <div className={styles.latencyIndicator} style={cardStyle}></div>
+          </p>
         </div>
       );
     } else {
