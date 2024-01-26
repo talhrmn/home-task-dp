@@ -55,9 +55,9 @@ export const MonitorSettings = () => {
                 return;
             }
             const newSettingsData = {
-                interval: data.time_interval,
-                validThreshold: data.valid_threshold,
-                dangerThreshold: data.danger_threshold,
+                interval: newTimeInterval,
+                validThreshold: newValidThresholdValue,
+                dangerThreshold: newDangerThresholdValue,
             } as SettingsType;
 
             setSettings(newSettingsData);
