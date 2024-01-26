@@ -10,7 +10,6 @@ from models.settings import SettingsObj
 class SettingsData:
     time_interval: int
     valid_threshold: int
-    warning_threshold: int
     danger_threshold: int
 
 
@@ -19,13 +18,12 @@ def format_response(settings_obj: SettingsObj) -> dict:
         return {
             "time_interval": settings_obj.time_interval,
             "valid_threshold": settings_obj.valid_threshold,
-            "warning_threshold": settings_obj.warning_threshold,
             "danger_threshold": settings_obj.danger_threshold,
         }
     return {}
 
 
-class SettingsDB:
+class SettingsController:
     def __init__(self):
         self.settings_engine = db_engine
 
@@ -46,7 +44,7 @@ class SettingsDB:
             settings = self.get_settings()
             if not settings:
                 return self.add_settings(
-                    SettingsData(time_interval=5, valid_threshold=30, warning_threshold=50, danger_threshold=80)
+                    SettingsData(time_interval=10, valid_threshold=150, danger_threshold=300)
                 )
         except Exception as e:
             return None
@@ -72,10 +70,10 @@ class SettingsDB:
     def update_settings(self, settings_data: SettingsData) -> bool:
         try:
             with self.get_session() as session:
-                monitor_to_update = session.query(SettingsObj).first()
-                if monitor_to_update:
+                settings_to_update = session.query(SettingsObj).first()
+                if settings_to_update:
                     for field, value in settings_data.__dict__.items():
-                        setattr(monitor_to_update, field, value)
+                        setattr(settings_to_update, field, value)
                     session.commit()
                     return True
         except Exception as e:

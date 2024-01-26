@@ -37,7 +37,7 @@ def format_response(monitor_object: MonitorObj) -> dict:
     return {}
 
 
-class MonitorDB:
+class MonitorController:
     def __init__(self):
         self.monitor_engine = db_engine
 

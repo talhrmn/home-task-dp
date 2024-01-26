@@ -28,7 +28,7 @@ export const GridLayout = () => {
       const allMonitorData = await getSettingsResponse.json();
       const { status, response, data } = allMonitorData;
       setSettings({
-        interval: data.interval,
+        interval: data.time_interval,
         validThreshold: data.valid_threshold,
         dangerThreshold: data.danger_threshold,
       } as SettingsType);

@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useMemo, useState} from "react";
 import styles from "../styles/monitorSettings.module.css";
 import {SettingsType, useSettingsContext} from "@/app/components/settingsContext";
 
@@ -24,7 +24,7 @@ export const MonitorSettings = () => {
             }
 
             const settingsResponse = await fetch(
-                "http://localhost:8000/settings/update",
+                "http://localhost:8000/settings",
                 {
                     method: "PUT",
                     headers: {
@@ -69,6 +69,26 @@ export const MonitorSettings = () => {
         }
     }, [newTimeInterval, newValidThresholdValue, newDangerThresholdValue, setSettings]);
 
+    const settingsDataDisplay = useMemo(() => {
+        return (
+            <div className={styles.sideContent}>
+                <div className={styles.subHeader}>
+                    <h2 className={styles.code}>Time Interval: <span>{settings.interval}</span></h2>
+                </div>
+                <div className={styles.subHeader}>
+                    <h4 className={styles.code}>Valid Threshold: <span
+                        style={{color: "green"}}>{settings.validThreshold}</span></h4>
+                </div>
+                <div className={styles.subHeader}>
+                    <h4 className={styles.code} style={{color: "orange"}}>Between Valid And Dangerous</h4>
+                </div>
+                <div className={styles.subHeader}>
+                    <h4 className={styles.code}>Danger Threshold: <span
+                        style={{color: "red"}}>{settings.dangerThreshold}</span></h4>
+                </div>
+            </div>);
+    }, [settings.dangerThreshold, settings.interval, settings.validThreshold]);
+
     return (
         <>
             <div className={styles.addItems}>
@@ -109,25 +129,14 @@ export const MonitorSettings = () => {
                     <div className={styles.hoverableImage}>
                         <button
                             className={styles.editButton}
-                            style={{background: "green"}}
+                            style={{background: "white", color: "black"}}
                             onClick={onApply}
                         >
                             Apply
                         </button>
                     </div>
                 </div>
-                <div className={styles.subHeader}>
-                    <h4 className={styles.code}>Under Valid Value</h4>
-                    <h4 className={styles.code} style={{ color: "green" }}>Green</h4>
-                </div>
-                <div className={styles.subHeader}>
-                    <h4 className={styles.code}>Between Valid And Dangerous</h4>
-                    <h4 className={styles.code} style={{ color: "orange" }}>Orange</h4>
-                </div>
-                <div className={styles.subHeader}>
-                    <h4 className={styles.code}>Over Dangerous Value</h4>
-                    <h4 className={styles.code} style={{ color: "red" }}>Red</h4>
-                </div>
+                {settingsDataDisplay}
             </div>
         </>
     );

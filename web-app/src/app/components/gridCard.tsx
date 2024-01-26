@@ -22,8 +22,6 @@ export const GridCard = ({ monitor }: GridCardProps) => {
     siteUrl: monitor.siteUrl,
   });
 
-  console.log(monitor.latency);
-
   const cardColor = useMemo(() => {
     const latency = monitor.latency;
 
