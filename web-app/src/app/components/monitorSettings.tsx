@@ -4,12 +4,6 @@ import React, {useCallback, useMemo, useState} from "react";
 import styles from "../styles/monitorSettings.module.css";
 import {SettingsType, useSettingsContext} from "@/app/components/settingsContext";
 
-type TrafficSystemConfigType = {
-    green: number,
-    yellow: number,
-    red: number,
-}
-
 export const MonitorSettings = () => {
     const {settings, setSettings} = useSettingsContext();
     const [newTimeInterval, setNewTimeInterval] = useState(settings.interval);
@@ -18,10 +12,16 @@ export const MonitorSettings = () => {
 
     const onApply = useCallback(async () => {
         try {
-            if (!newTimeInterval || !newValidThresholdValue || !newDangerThresholdValue) {
+            if (!newTimeInterval && !newValidThresholdValue && !newDangerThresholdValue) {
                 console.error(`Parameters are invalid`);
                 return;
             }
+
+            const newSettingsData = {
+                interval: (newTimeInterval ? newTimeInterval : settings.interval),
+                validThreshold: (newValidThresholdValue ? newValidThresholdValue : settings.validThreshold),
+                dangerThreshold: (newDangerThresholdValue ? newDangerThresholdValue : settings.dangerThreshold),
+            } as SettingsType;
 
             const settingsResponse = await fetch(
                 "http://localhost:8000/settings",
@@ -31,9 +31,9 @@ export const MonitorSettings = () => {
                         "Content-Type": "application/json; charset=utf-8",
                     },
                     body: JSON.stringify({
-                        time_interval: newTimeInterval,
-                        valid_threshold: newValidThresholdValue,
-                        danger_threshold: newDangerThresholdValue,
+                        time_interval: newSettingsData.interval,
+                        valid_threshold: newSettingsData.validThreshold,
+                        danger_threshold: newSettingsData.dangerThreshold,
                     }),
                 }
             );
@@ -54,20 +54,15 @@ export const MonitorSettings = () => {
                 console.error("Error:", response);
                 return;
             }
-            const newSettingsData = {
-                interval: newTimeInterval,
-                validThreshold: newValidThresholdValue,
-                dangerThreshold: newDangerThresholdValue,
-            } as SettingsType;
 
             setSettings(newSettingsData);
-            setNewTimeInterval(newSettingsData.interval);
-            setNewValidThresholdValue(newSettingsData.validThreshold);
-            setNewDangerThresholdValue(newSettingsData.dangerThreshold);
+            setNewTimeInterval(NaN);
+            setNewValidThresholdValue(NaN);
+            setNewDangerThresholdValue(NaN);
         } catch (error) {
             console.error(`Failed to add to site ${error}`);
         }
-    }, [newTimeInterval, newValidThresholdValue, newDangerThresholdValue, setSettings]);
+    }, [newTimeInterval, newValidThresholdValue, newDangerThresholdValue, settings.interval, settings.validThreshold, settings.dangerThreshold, setSettings]);
 
     const settingsDataDisplay = useMemo(() => {
         return (
@@ -89,6 +84,15 @@ export const MonitorSettings = () => {
             </div>);
     }, [settings.dangerThreshold, settings.interval, settings.validThreshold]);
 
+
+    const inputPlaceholders = useMemo(() => {
+        return {
+            intervalStr: `${settings.interval} Sec`,
+            validThresholdStr: `${settings.validThreshold} ms`,
+            dangerThresholdStr: `${settings.dangerThreshold} ms`
+        }
+    }, [settings]);
+
     return (
         <>
             <div className={styles.addItems}>
@@ -102,7 +106,7 @@ export const MonitorSettings = () => {
                             type="number"
                             className={styles.userInput}
                             value={newTimeInterval}
-                            placeholder="Seconds - Default = 10"
+                            placeholder={inputPlaceholders.intervalStr}
                             onChange={(e) => setNewTimeInterval(e.target.value as unknown as number)}
                         />
                     </div>
@@ -112,7 +116,7 @@ export const MonitorSettings = () => {
                             type="number"
                             className={styles.userInput}
                             value={newValidThresholdValue}
-                            placeholder="150 ms"
+                            placeholder={inputPlaceholders.validThresholdStr}
                             onChange={(e) => setNewValidThresholdValue(e.target.value as unknown as number)}
                         />
                     </div>
@@ -122,7 +126,7 @@ export const MonitorSettings = () => {
                             type="number"
                             className={styles.userInput}
                             value={newDangerThresholdValue}
-                            placeholder="300 ms"
+                            placeholder={inputPlaceholders.dangerThresholdStr}
                             onChange={(e) => setNewDangerThresholdValue(e.target.value as unknown as number)}
                         />
                     </div>

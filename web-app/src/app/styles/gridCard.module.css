@@ -1,11 +1,12 @@
 .card {
+    opacity: 1;
     text-align: center;
     margin: 10px;
     padding: 1rem;
-    border: 1px solid rgba(var(--card-border-rgb), 0);
+    border: 1px solid #2b2f31;
     border-radius: var(--border-radius);
-    background: darkcyan;
-    transition: background 200ms, border 200ms;
+    background: linear-gradient(to bottom, #2a3236, #dde6ea);
+    transition: opacity 0.3s ease-in-out;
     cursor: pointer;
     min-height: 300px;
     display: flex;
@@ -52,7 +53,7 @@
         .editInput {
             text-align: center;
             padding: 10px;
-            min-width: 200px;
+            /*min-width: 200px;*/
         }
 
         .editInput::placeholder {
@@ -83,8 +84,7 @@
         }
 
         .editButton:hover {
-            background-color: #3498db;
-            color: #fff;
+            color: #2c2929;
             border-color: #fff;
         }
     }
@@ -92,10 +92,8 @@
 
 @media (hover: hover) and (pointer: fine) {
     .card:hover {
-        background: darkcyan;
-        border: 1px solid rgba(var(--card-border-rgb), 0.15);
         opacity: 0.8;
-        transition: opacity 0.2s ease-in-out;
+        /*transition: opacity 0.3s ease-in-out;*/
     }
 
     .card:hover span {

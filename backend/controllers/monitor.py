@@ -3,10 +3,9 @@ from dataclasses import dataclass
 from typing import List, Union, Tuple
 
 import requests
-from sqlalchemy.util.compat import contextmanager
 
-from db import db_engine, SessionLocal
-from models.monitor import MonitorObj
+from backend.controllers.db_controller import DBController
+from backend.models.monitor import MonitorObj
 
 
 async def latency_check(site_url: str) -> Union[float, None]:
@@ -37,21 +36,7 @@ def format_response(monitor_object: MonitorObj) -> dict:
     return {}
 
 
-class MonitorController:
-    def __init__(self):
-        self.monitor_engine = db_engine
-
-    @contextmanager
-    def get_session(self):
-        session = SessionLocal()
-        try:
-            yield session
-            session.commit()
-        except Exception as e:
-            session.rollback()
-            raise e
-        finally:
-            session.close()
+class MonitorController(DBController):
 
     def get_monitor(self, monitor_id: int) -> Tuple[bool, Union[dict, None]]:
         with self.get_session() as session:
@@ -69,7 +54,6 @@ class MonitorController:
                 site_latency = await latency_check(monitor_data.site_url)
                 new_monitor_obj = MonitorObj(**monitor_data.__dict__, latency=site_latency)
                 session.add(new_monitor_obj)
-                session.commit()
                 return True, format_response(new_monitor_obj)
         except Exception as e:
             return False, {}
@@ -79,7 +63,6 @@ class MonitorController:
             monitor_to_remove = session.query(MonitorObj).get(monitor_id)
             if monitor_to_remove:
                 session.delete(monitor_to_remove)
-                session.commit()
                 return True, format_response(monitor_to_remove)
             return False, {}
 
@@ -91,6 +74,5 @@ class MonitorController:
                     setattr(monitor_to_update, field, value)
                 site_latency = await latency_check(monitor_data.site_url)
                 setattr(monitor_to_update, "latency", site_latency)
-                session.commit()
                 return True, format_response(monitor_to_update)
             return False, {}

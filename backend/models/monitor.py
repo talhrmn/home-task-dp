@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float
 
-from models.base import Base
+from backend.models.base import Base
 
 
 class MonitorObj(Base):

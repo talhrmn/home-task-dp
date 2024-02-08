@@ -1,7 +1,7 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-from controllers.monitor import MonitorController, MonitorData
-from controllers.settings import SettingsController
+from backend.controllers.monitor import MonitorController, MonitorData
+from backend.controllers.settings import SettingsController
 
 scheduler = AsyncIOScheduler()
 

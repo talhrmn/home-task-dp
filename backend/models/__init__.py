@@ -1,3 +1,3 @@
-from models.monitor import MonitorObj
-from models.settings import SettingsObj
-from models.base import Base
+from backend.models.monitor import MonitorObj
+from backend.models.settings import SettingsObj
+from backend.models.base import Base

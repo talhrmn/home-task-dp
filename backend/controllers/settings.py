@@ -1,9 +1,7 @@
 from dataclasses import dataclass
 
-from sqlalchemy.util.compat import contextmanager
-
-from db import db_engine, SessionLocal
-from models.settings import SettingsObj
+from backend.controllers.db_controller import DBController
+from backend.models.settings import SettingsObj
 
 
 @dataclass
@@ -23,21 +21,7 @@ def format_response(settings_obj: SettingsObj) -> dict:
     return {}
 
 
-class SettingsController:
-    def __init__(self):
-        self.settings_engine = db_engine
-
-    @contextmanager
-    def get_session(self):
-        session = SessionLocal()
-        try:
-            yield session
-            session.commit()
-        except Exception as e:
-            session.rollback()
-            raise e
-        finally:
-            session.close()
+class SettingsController(DBController):
 
     def init_settings(self):
         try:
@@ -62,7 +46,6 @@ class SettingsController:
             with self.get_session() as session:
                 new_settings_obj = SettingsObj(**settings_data.__dict__)
                 session.add(new_settings_obj)
-                session.commit()
                 return True
         except Exception as e:
             return False
@@ -74,7 +57,7 @@ class SettingsController:
                 if settings_to_update:
                     for field, value in settings_data.__dict__.items():
                         setattr(settings_to_update, field, value)
-                    session.commit()
+
                     return True
         except Exception as e:
             return False

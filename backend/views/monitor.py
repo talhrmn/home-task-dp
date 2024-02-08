@@ -3,7 +3,7 @@ from typing import Optional, Union, List
 from fastapi import Depends, APIRouter
 from pydantic import BaseModel
 
-from controllers.monitor import MonitorController, MonitorData
+from backend.controllers.monitor import MonitorController, MonitorData
 
 monitor_router = APIRouter()
 

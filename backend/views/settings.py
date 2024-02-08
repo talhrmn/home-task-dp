@@ -1,9 +1,9 @@
 from typing import Optional
-
-from controllers.settings import SettingsController, SettingsData
 from fastapi import Depends, APIRouter
 from pydantic import BaseModel
-from services.scheduler import scheduler_controller
+
+from backend.controllers.settings import SettingsController, SettingsData
+from backend.services.scheduler import scheduler_controller
 
 settings_router = APIRouter()
 

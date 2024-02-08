@@ -1,16 +1,11 @@
-import React, { useCallback, useMemo, useState, useEffect } from "react";
-import { useSettingsContext } from "./settingsContext";
-import { SiteType, useSiteContext } from "./siteContext";
+import React, {useCallback, useMemo, useState} from "react";
+import {useSettingsContext} from "./settingsContext";
+import {SiteType, useSiteContext} from "./siteContext";
 
 import styles from "../styles/gridCard.module.css";
 
 export type GridCardProps = {
   monitor: SiteType;
-};
-
-type ServerUpdateMessage = {
-  monitor_id: number;
-  latency: number;
 };
 
 export const GridCard = ({ monitor }: GridCardProps) => {
@@ -141,69 +136,69 @@ export const GridCard = ({ monitor }: GridCardProps) => {
     }
   }, [allSites, editedValues, monitor.monitorId, setAllSites]);
 
-  const cardDisplay = useMemo(() => {
+  return useMemo(() => {
     if (!inEditMode) {
       return (
-        <div className={styles.card} onClick={onClick}>
-          <h2 className={styles.h2}>{monitor.siteName}</h2>
-          <p>
-            <div className={styles.latencyIndicator} style={cardStyle}></div>
-          </p>
-        </div>
+          <div className={styles.card} onClick={onClick}>
+            <h2 className={styles.h2}>{monitor.siteName}</h2>
+            <p>
+              <div className={styles.latencyIndicator} style={cardStyle}></div>
+            </p>
+          </div>
       );
     } else {
       return (
-        <div className={styles.card}>
-          <div className={styles.editItem}>
-            <h3 className={styles.h3}>Site Name</h3>
-            <input
-              className={styles.editInput}
-              type="text"
-              value={editedValues.siteName || ""}
-              onChange={(e) =>
-                setEditedValues((prev) => ({
-                  ...prev,
-                  siteName: e.target.value,
-                }))
-              }
-              placeholder={monitor.siteName}
-            />
+          <div className={styles.card}>
+            <div className={styles.editItem}>
+              <h3 className={styles.h3}>Site Name</h3>
+              <input
+                  className={styles.editInput}
+                  type="text"
+                  value={editedValues.siteName || ""}
+                  onChange={(e) =>
+                      setEditedValues((prev) => ({
+                        ...prev,
+                        siteName: e.target.value,
+                      }))
+                  }
+                  placeholder={monitor.siteName}
+              />
+            </div>
+            <div className={styles.editItem}>
+              <h3 className={styles.h3}>URL:</h3>
+              <input
+                  className={styles.editInput}
+                  type="text"
+                  value={editedValues.siteUrl || ""}
+                  onChange={(e) =>
+                      setEditedValues((prev) => ({
+                        ...prev,
+                        siteUrl: e.target.value,
+                      }))
+                  }
+                  placeholder={monitor.siteName}
+              />
+            </div>
+            <div className={styles.editButtonContainer}>
+              <button className={styles.editButton} onClick={onCancelEdit}>
+                Cancel
+              </button>
+              <button
+                  className={styles.editButton}
+                  style={{background: "red"}}
+                  onClick={onDelete}
+              >
+                Remove
+              </button>
+              <button
+                  className={styles.editButton}
+                  style={{background: "green"}}
+                  onClick={onApplyEdit}
+              >
+                Apply
+              </button>
+            </div>
           </div>
-          <div className={styles.editItem}>
-            <h3 className={styles.h3}>URL:</h3>
-            <input
-              className={styles.editInput}
-              type="text"
-              value={editedValues.siteUrl || ""}
-              onChange={(e) =>
-                setEditedValues((prev) => ({
-                  ...prev,
-                  siteUrl: e.target.value,
-                }))
-              }
-              placeholder={monitor.siteName}
-            />
-          </div>
-          <div className={styles.editButtonContainer}>
-            <button className={styles.editButton} onClick={onCancelEdit}>
-              Cancel
-            </button>
-            <button
-              className={styles.editButton}
-              style={{ background: "red" }}
-              onClick={onDelete}
-            >
-              Remove
-            </button>
-            <button
-              className={styles.editButton}
-              style={{ background: "green" }}
-              onClick={onApplyEdit}
-            >
-              Apply
-            </button>
-          </div>
-        </div>
       );
     }
   }, [
@@ -218,6 +213,4 @@ export const GridCard = ({ monitor }: GridCardProps) => {
     onCancelEdit,
     onApplyEdit,
   ]);
-
-  return cardDisplay;
 };

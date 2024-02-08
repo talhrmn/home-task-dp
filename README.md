@@ -1,21 +1,24 @@
-# Full Stack Developer Home Assignment
+# Full Stack Project
 
 ## Task Description
-This repository contains the solution for the Full Stack Developer Home Assignment, 
-which involves creating a React-based application for monitoring and displaying the latency levels of various websites. 
+This repository contains a React-based application for monitoring and displaying the latency levels of various websites. 
 The application includes both the server-side and client components.
 
 ## Getting Started
 
 ### Server Side
 1. Install the required dependencies by navigating to the backend directory:
-    ```cd backend
-    pip install -r requirements.txt```
+    ```bash 
+    cd backend 
+   pip install -r requirements.txt
+   ```
     
     
 
 2. Run the server using [Unicorn](https://www.uvicorn.org/):
-    ```unicorn app:app --reload```
+    ```bash 
+    unicorn app:app --reload
+   ```
     
 
 ### Client Side
@@ -35,9 +38,6 @@ The application includes both the server-side and client components.
     ```bash
     npm run dev
     ```
-
-Notes:
-- Node.js ^18.
 
 ## To Do
 - Improve overall design and user interface.

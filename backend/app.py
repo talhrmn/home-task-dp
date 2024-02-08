@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from controllers.settings import SettingsController
-from views.monitor import monitor_router
-from views.settings import settings_router
-from services.scheduler import scheduler_controller
-import db
+from backend.controllers.settings import SettingsController
+from backend.views.monitor import monitor_router
+from backend.views.settings import settings_router
+from backend.services.scheduler import scheduler_controller
+import backend.db
 
 app = FastAPI()
 

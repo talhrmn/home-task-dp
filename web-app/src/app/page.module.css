@@ -5,6 +5,7 @@
     align-items: center;
     padding: 6rem;
     min-height: 100vh;
+    background: linear-gradient(to right, #237593, #2b2f31);
 }
 
 .description {
@@ -56,4 +57,3 @@
     gap: 5%;
     height: 350px;
 }
-

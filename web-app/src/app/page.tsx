@@ -15,8 +15,7 @@ export default function Home() {
                 <SiteProvider>
                     <div className={styles.description}>
                         <p>
-                            <code className={styles.code}>Deeper -- </code>
-                            Site Latency Monitor&nbsp;
+                            <code className={styles.code}>Site Latency Monitor</code>
                         </p>
                         <div>
                             <BannerWindow/>
