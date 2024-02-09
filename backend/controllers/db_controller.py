@@ -1,4 +1,4 @@
-from sqlalchemy.util.compat import contextmanager
+from contextlib import contextmanager
 
 from backend.db import db_engine, SessionLocal
 

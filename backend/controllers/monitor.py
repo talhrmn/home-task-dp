@@ -54,6 +54,7 @@ class MonitorController(DBController):
                 site_latency = await latency_check(monitor_data.site_url)
                 new_monitor_obj = MonitorObj(**monitor_data.__dict__, latency=site_latency)
                 session.add(new_monitor_obj)
+                session.flush()
                 return True, format_response(new_monitor_obj)
         except Exception as e:
             return False, {}

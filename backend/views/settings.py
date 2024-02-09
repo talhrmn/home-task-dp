@@ -1,4 +1,5 @@
 from typing import Optional
+
 from fastapi import Depends, APIRouter
 from pydantic import BaseModel
 

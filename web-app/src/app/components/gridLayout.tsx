@@ -63,9 +63,9 @@ export const GridLayout = () => {
     }, [setSettings]);
 
     useEffect(() => {
-        const intervalId = setInterval(fetchMonitorData, settings.interval);
+        const intervalId = setInterval(fetchMonitorData, (settings.interval * 1000));
         return () => {
-            clearInterval(intervalId); // Clear the interval when the component unmounts
+            clearInterval(intervalId);
         };
     }, [fetchMonitorData, settings.interval]);
 
